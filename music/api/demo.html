@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+
+// https://y.qq.com/download/download.js?jsonpCallback=MusicJsonCallback&loginUin=0&hostUin=0&format=jsonp&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0
+
+  function jsonp(src, callbackName, callback) {
+    let script = document.createElement("script");
+    script.src = src;
+    document.body.appendChild(script);
+    window[callbackName] = function(data) {
+      callback(data);
+    }
+  }
+
+  // 获取分类数据
+  jsonp('https://c.y.qq.com/v8/fcg-bin/getmv_by_tag?g_tk=5381&jsonpCallback=MusicJsonCallback&loginUin=0&hostUin=0&format=jsonp&inCharset=utf8&outCharset=GB2312&notice=0&platform=yqq&needNewCode=0&cmd=shoubo&lan=all', 'MusicJsonCallback', function(res) {
+    // service_data.service_rmd = res.result;
+    console.log(res)
+  })
+  </script>
+</body>
+
+</html>

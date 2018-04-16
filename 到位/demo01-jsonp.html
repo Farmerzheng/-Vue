@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <script>
+    // http://www.daoway.cn/daoway/rest/config/banners?city=%E6%B2%88%E9%98%B3&community_id=82753&h5=1
+
+    var oScript = document.createElement("script");
+    oScript.src = ' http://www.daoway.cn/daoway/rest/config/banners?city=沈阳&community_id=82753&h5=1&cb=fn';
+    document.body.appendChild(oScript);
+
+    function fn(res) {
+        console.log(res)
+    }
+    // $.ajax({
+    // 	method:"",
+    // 	url:"",
+    // })
+    //初始化ajax（初始化重复的属性）
+    // $.ajaxSetup({
+    //     type: "GET",
+    //     url: "http://app.sencha.com.cn/soya/apps/testdb/server/",
+    //     dataType: "jsonp"
+    // });
+
+    //发送ajax请求
+    // $.ajax({
+    //     type:"GET",
+    //     url: "http://www.daoway.cn/daoway/rest/config/banners",
+    //     dataType: "jsonp",
+    //     data:{
+    //        'city':'沈阳',
+    //        'community_id':82753,
+    //        'h5':1
+    //     },
+    //     // timeout: 3000,
+    //     success: function(responseText) {
+    //         console.log(responseText);
+    //     },
+    //     error: function(e) {
+    //         console.log(e);
+    //         //            if(e.statusText=="timeout"){
+    //         // alert("请求超时");
+    //         //            }
+    //     }
+    // })
+    </script>
+</body>
+
+</html>

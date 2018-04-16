@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="vue.js"></script>
+  <script src="api.config.js"></script>
+  <script src="jsonp.js"></script>
+</head>
+<style>
+#input_box_wrap {
+  background: blue;
+  width: 300px;
+  height: 340px;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -150px;
+  margin-top: -170px;
+}
+</style>
+
+<body>
+  <div id="app">
+    <button id="add" @click="addWord()">添加</button>
+    <table border=1>
+      <tbody>
+        <tr v-for="item in wordsArr">
+          <td>{{item.id}}</td>
+          <td>{{item.word}}</td>
+          <td>{{item.pronounce}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.wordtype}}</td>
+          <td>{{item.dateLine}}</td>
+          <td>
+            <button @click="updateWord(item)">修改</button>
+            <button @click="deleteWord(item.id)">删除</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="input_box_wrap" v-show="input_box_show">
+      <div id="input_box">
+        <div class="input_box_top">
+          <h1>添加单词</h1>
+          <span id="close"></span>
+        </div>
+        <form action="">
+          <span>单词:</span>
+          <div class="single_line">
+            <input type="text" id="word" v-model="word">
+          </div>
+          <span>音标:</span>
+          <div class="single_line">
+            <input type="text" id="pronounce" v-model="pronounce">
+          </div>
+          <span>解释:</span>
+          <div class="many_line">
+            <textarea id="description" v-model="description"></textarea>
+          </div>
+          <span>分类:</span>
+          <div class="single_line">
+            <input type="text" id="wordtype" v-model="wordtype">
+          </div>
+          <input type="button" value="提交" id="submit" @click="submit()">
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      wordsArr: [],
+      input_box_show: false,
+      update_word_id: "",
+      word: "",
+      pronounce: "",
+      description: "",
+      wordtype: "",
+      add_boolean: true
+    },
+    mounted() {
+      this.showWords();
+    },
+    methods: {
+      showWords() {
+        jsonp.res(url, showData, function(res) {
+          this.wordsArr = res.data;
+        }.bind(this))
+      },
+      addWord() {
+        this.input_box_show = true;
+        this.add_boolean = true;
+        this.word = "";
+        this.description = "";
+        this.wordtype = "";
+        this.pronounce = "";
+      },
+      updateWord(item) {
+        this.input_box_show = true;
+        this.add_boolean = false;
+        this.update_word_id = item.id;
+        this.word = item.word;
+        this.pronounce = item.pronounce;
+        this.description = item.description;
+        this.wordtype = item.wordtype;
+      },
+      deleteWord(id) {
+
+        this.wordsArr.forEach(function(item) {
+          if (item.id == id) {
+            let index = this.wordsArr.indexOf(item);
+            deleteData.id = item.id;
+            jsonp.res(url, deleteData, function(res) {
+              this.wordsArr.splice(index, 1);
+              this.wordsArr = res.data;
+              this.showWords();
+            }.bind(this))
+          }
+        }.bind(this))
+
+      },
+      submit() {
+
+        this.input_box_show = false;
+        /* updateData = { id: 0, word: "", pronounce: "", description: "", wordtype: "" }*/
+
+        if (this.add_boolean) {
+          addData.word = this.word;
+          addData.description = this.description;
+          addData.wordtype = this.wordtype;
+          addData.pronounce = this.pronounce;
+
+          jsonp.res(url, addData, function(res) {
+            this.showWords();
+          }.bind(this))
+        } else {
+          updateData.id = this.update_word_id;
+          updateData.word = this.word;
+          updateData.description = this.description;
+          updateData.wordtype = this.wordtype;
+          updateData.pronounce = this.pronounce;
+
+          jsonp.res(url, updateData, function(res) {
+            this.showWords();
+          }.bind(this));
+        }
+
+      }
+    }
+  })
+  </script>
+</body>
+
+</html>

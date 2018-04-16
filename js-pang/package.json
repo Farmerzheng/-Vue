@@ -1,0 +1,11 @@
+{
+  "name": "js-pang",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run": "browser-sync start --server --files  **/*.html"
+  },
+  "author": "",
+  "license": "ISC"
+}
